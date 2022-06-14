@@ -31,7 +31,7 @@ class ListEmployeeComponent extends Component {
                 <h2 className="text-center">Employees List</h2>
 
                 <Link to="/add-employee">
-                        <button className='btn-btn-primary'>Add Employee</button>
+                        <button className="btn btn-primary">Add Employee</button>
                     </Link>
                 <br></br>
 
