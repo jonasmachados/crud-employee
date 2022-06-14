@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import EmployeeService from '../services/EmployeeService';
 
 class CreateEmployeeComponent extends Component {
 
@@ -20,6 +21,10 @@ class CreateEmployeeComponent extends Component {
         e.preventDefault();
         let employee = { firstName: this.state.firstName, lastName: this.state.lastName, emailId: this.state.emailId };
         console.log('employee => ' + JSON.stringify(employee));
+
+        EmployeeService.createEmployee(employee).then(res => {
+            window.location.href = "employees";
+        });
     }
 
     changeFirstNameHandler = (event) => {
@@ -63,6 +68,7 @@ class CreateEmployeeComponent extends Component {
                                         <input placeholder="Email Address" name="emailId" className="form-control"
                                             value={this.state.emailId} onChange={this.changeEmailHandler} />
                                     </div>
+
 
                                     <button className="btn btn-success" onClick={this.saveEmployee}>Save</button>
 

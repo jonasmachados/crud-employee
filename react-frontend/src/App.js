@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 import ListEmployeeComponent from './components/ListEmployeeComponent';
 import HeaderComponent from './components/HeaderComponent';
@@ -20,7 +20,6 @@ function App() {
             <Route path="/" element={<ListEmployeeComponent />} />
             <Route path="/employees" element={<ListEmployeeComponent />} />
             <Route path="/add-employee" element={<CreateEmployeeComponent />} />
-    
           </Routes>
 
         </div>
