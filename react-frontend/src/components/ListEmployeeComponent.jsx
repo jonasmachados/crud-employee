@@ -1,70 +1,57 @@
-import React, { Component } from 'react';
+import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom'
 import EmployeeService from '../services/EmployeeService';
-import { Link } from 'react-router-dom';
 
+const ListEmployeeComponent = () => {
 
-class ListEmployeeComponent extends Component {
+    const [employees, setEmployees] = useState([])
 
-    constructor(props) {
-        super(props)
+    useEffect(() => {
 
-        this.state = {
-            employees: []
-        }
-        this.addEmployee = this.addEmployee.bind(this);
+        getAllEmployees();
+    }, [])
 
+    const getAllEmployees = () => {
+        EmployeeService.getAllEmployees().then((response) => {
+            setEmployees(response.data)
+            console.log(response.data);
+        }).catch(error =>{
+            console.log(error);
+        })
     }
 
-    componentDidMount() {
-        EmployeeService.getEmployees().then((res) => {
-            this.setState({ employees: res.data });
-        });
-    }
+    return (
+        <div className = "container">
+            <h2 className = "text-center"> List Employees </h2>
+            <Link to = "/add-employee" className = "btn btn-primary mb-2" > Add Employee </Link>
+            <table className="table table-bordered table-striped">
+                <thead>
+                    <th> Employee Id </th>
+                    <th> Employee First Name </th>
+                    <th> Employee Last Name </th>
+                    <th> Employee Email Id </th>
+                    <th> Actions </th>
+                </thead>
+                <tbody>
+                    {
+                        employees.map(
+                            employee =>
+                            <tr key = {employee.id}> 
+                                <td> {employee.id} </td>
+                                <td> {employee.firstName} </td>
+                                <td>{employee.lastName}</td>
+                                <td>{employee.emailId}</td>
+                                <td>
+                                    <Link className="btn btn-info" to={`/edit-employee/${employee.id}`} >Update</Link>
 
-    addEmployee() {
-        this.props.history.push('/add-employee');
-    }
-
-    render() {
-        return (
-            <div>
-                <h2 className="text-center">Employees List</h2>
-
-                <Link to="/add-employee">
-                        <button className="btn btn-primary">Add Employee</button>
-                    </Link>
-                <br></br>
-
-                <div className="row">
-                    <table className=" table table-striped table-bordered">
-
-                        <thead>
-                            <tr>
-                                <th>Employee First Name</th>
-                                <th>Employee Last Name</th>
-                                <th>Employee Email Id</th>
-                                <th>Actions</th>
+                                </td>
                             </tr>
-                        </thead>
-
-                        <tbody>
-                            {
-                                this.state.employees.map(
-                                    employee =>
-                                        <tr key={employee.id}>
-                                            <td>{employee.firstName}</td>
-                                            <td>{employee.lastName}</td>
-                                            <td>{employee.emailId}</td>
-                                        </tr>
-                                )
-                            }
-                        </tbody>
-
-                    </table>
-                </div>
-            </div>
-        );
-    }
+                        )
+                    }
+                </tbody>
+            </table>
+        </div>
+    )
 }
 
 export default ListEmployeeComponent;
